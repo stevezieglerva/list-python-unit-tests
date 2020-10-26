@@ -9,17 +9,19 @@ class UnitTests(unittest.TestCase):
         input = """test_1.py:class UnitTests(unittest.TestCase):
 test_1.py:    def test_this_and_than(self):
 test_2a.3.py:class IntegrationTests(unittest.TestCase):
-test_2a.3.py:    def test_function__given_this__then__that(self):"""
+test_2a.3.py:    def test_function_a__given_this__then_that(self):
+test_2a.3.py:    def test_function_a__given_this_1__then_that_2(self):"""
 
         # Act
         results = format_output(input)
         print(results)
 
         # Assert
-        expected = """test_1.py                               |class UnitTests(unittest.TestCase)
-test_1.py                               |    def test_this_and_than(self)
-test_2a.3.py                            |class IntegrationTests(unittest.TestCase)
-test_2a.3.py                            |    def test_function__given_this__then__that(self)
+        expected = """test_1.py                                         | class UnitTests(unittest.TestCase)
+test_1.py                                         |     def test_this_and_than(self)
+test_2a.3.py                                      | class IntegrationTests(unittest.TestCase)
+test_2a.3.py                                      |     def test_function_a                 | given_this                              | then_that(self)
+test_2a.3.py                                      |     def test_function_a                 | given_this_1                            | then_that_2(self)
 """
         self.maxDiff = None
         self.assertEqual(results, expected)
