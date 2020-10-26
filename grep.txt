@@ -1,2 +1,0 @@
-class IntegrationTests(unittest.TestCase):
-    def test_function__given_this__then_that(self):
