@@ -8,12 +8,13 @@ def format_output(input):
     if lines[0].startswith("class "):
         includes_filename = False
     for num, line in enumerate(lines):
-        if line[-1] == ":":
-            line = line[:-1]
-        if line[-1] == "(":
-            line = line[:-1]
-        print(f"{num} : {line}")
         if line != "":
+            if line[-1] == ":":
+                line = line[:-1]
+            if line[-1] == "(":
+                line = line[:-1]
+            print(f"{num} : {line}")
+
             filename = ""
             rest_of_line = line
             if includes_filename:
@@ -27,12 +28,15 @@ def format_output(input):
                 gwt_parts = rest_of_line.replace("(self)", "").split("__")
                 if len(gwt_parts) == 3:
                     rest_of_line = (
-                        f"{gwt_parts[0]:<40}| {gwt_parts[1]:<40}| {gwt_parts[2]}"
+                        f"{gwt_parts[0]:<50}| {gwt_parts[1]:<50}| {gwt_parts[2]}"
                     )
+            spacer = ""
+            if "class " in rest_of_line:
+                spacer = "\n\n"
             if includes_filename:
-                output = output + f"{filename:<50}| {rest_of_line}\n"
+                output = output + spacer + f"{filename:<75}| {rest_of_line}\n"
             else:
-                output = output + f"{rest_of_line}\n"
+                output = output + spacer + f"{rest_of_line}\n"
 
     return output
 
