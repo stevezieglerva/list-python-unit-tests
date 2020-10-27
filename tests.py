@@ -30,7 +30,7 @@ test_2a.3.py                                      |     def test_function_a     
 
     def test_format_output__given_one_files_in_results__then_results_are_correct(self):
         # Arrange
-        input = """class IntegrationTests(unittest.TestCase):
+        input = """class IntegrationTestsOneFile(unittest.TestCase):
     def test_function__given_this__then_that(self):"""
 
         # Act
@@ -38,7 +38,25 @@ test_2a.3.py                                      |     def test_function_a     
         print(results)
 
         # Assert
-        expected = """class IntegrationTests(unittest.TestCase):
+        expected = """class IntegrationTestsOneFile(unittest.TestCase)
+    def test_function                   | given_this                              | then_that
+"""
+        self.maxDiff = None
+        self.assertEqual(results, expected)
+
+    def test_format_output__given_line_wrapped_func_name__then_results_are_correct(
+        self,
+    ):
+        # Arrange
+        input = """class LineWrap(unittest.TestCase):
+    def test_function__given_this__then_that("""
+
+        # Act
+        results = format_output(input)
+        print(results)
+
+        # Assert
+        expected = """class LineWrap(unittest.TestCase)
     def test_function                   | given_this                              | then_that
 """
         self.maxDiff = None
